@@ -58,6 +58,10 @@ object Main {
      * 3 fois le chiffre 1 puis 2fois le chiffre 2 et enfin 1 fois le chiffre 1. L'étape suivante sera donc constituée par 312211.
      */
     def ant(etape: List[Int], nombreIteration: Int): List[Int] = {
+       def iterate(etape : List[Int]) : List[Int] = {
+         
+       }
+      
        (etape, nombreIteration) match {
          case (Nil,_) => throw new IllegalArgumentException
          case (_, 0) => etape
