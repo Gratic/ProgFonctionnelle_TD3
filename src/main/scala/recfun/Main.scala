@@ -57,7 +57,14 @@ object Main {
      * le  nombre  de  fois  qu'un  chiffre  se trouve plusieurs fois écrit consécutivement. Ainsi à l'étape 111221, la lecture de gauche à droite de ce "mot" sera
      * 3 fois le chiffre 1 puis 2fois le chiffre 2 et enfin 1 fois le chiffre 1. L'étape suivante sera donc constituée par 312211.
      */
-    def ant(etape: List[Int], nombreIteration: Int): List[Int] = ???
+    def ant(etape: List[Int], nombreIteration: Int): List[Int] = {
+       (etape, nombreIteration) match {
+         case (Nil,_) => throw new IllegalArgumentException
+         case (_, 0) => etape
+         case (_, nombreIteration) => ant(machin(etape),nombreIteration - 1) 
+       }
+       Nil
+    }
 
     /**
      * Exercise 4
