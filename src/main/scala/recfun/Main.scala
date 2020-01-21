@@ -4,8 +4,8 @@ object Main {
 
    def main(args: Array[String]) {
         println("Pascal's Triangle")
-        for (row ← 0 to 10) {
-            for (col ← 0 to row)
+        for (row <- 0 to 10) {
+            for (col <- 0 to row)
                 print(coefBinomial(col, row) + " ")
             println()
         }
@@ -15,13 +15,41 @@ object Main {
      * Exercise 1
      * Triangle de Pascal
      */
-    def coefBinomial(col: Int, ligne: Int): Int = ???
+    def coefBinomial(col: Int, ligne: Int): Int = {
+      def factoriel(n : Int) : Int = {
+        n match {
+          case 0 => 1
+          case 1 => 1
+          case _ => n * factoriel(n-1)
+        }
+      }
+      
+      if (col > ligne || col < 0)
+        throw new IllegalArgumentException
+      else
+        factoriel(ligne)/(factoriel(col)*factoriel(ligne-col))
+    }
 
     /**
      * Exercise 2
      * Écrire une fonction récursive qui renvoie vraie ssi une liste de caractères est un palindrome
      */
-    def isPalindrome(list: List[Char]): Boolean = ???
+    def isPalindrome(list: List[Char]): Boolean = {
+      def renverse(myList: List[Any]): List[Any] = 
+      {
+        myList match {
+          case Nil => throw new IllegalArgumentException
+          case first::Nil => List(first)
+          case _ => myList.last::renverse(myList.init)
+        }
+      }
+      
+      list match {
+        case Nil => true
+        case list if list == renverse(list) => true
+        case _ => false
+      }
+    }
 
     /**
      * Exercise 3
