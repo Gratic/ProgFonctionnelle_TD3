@@ -57,18 +57,40 @@ object Main {
      * le  nombre  de  fois  qu'un  chiffre  se trouve plusieurs fois écrit consécutivement. Ainsi à l'étape 111221, la lecture de gauche à droite de ce "mot" sera
      * 3 fois le chiffre 1 puis 2fois le chiffre 2 et enfin 1 fois le chiffre 1. L'étape suivante sera donc constituée par 312211.
      */
+    /**
     def ant(etape: List[Int], nombreIteration: Int): List[Int] = {
-       def iterate(etape : List[Int]) : List[Int] = {
-         
+      def iterate(myList: List[Int], count: Int, number: Int): List[Int] = {
+       (myList,count,number) match {
+         case (Nil,_,_) => Nil
+         case (head::tail,_,number) if head != number => count::number::iterate(tail,0,tail.head)
+         case (_,_,_) if count > etape.count => Nil
+         case _ => iterate(myList.tail, count, number)
        }
+     }
       
-       (etape, nombreIteration) match {
-         case (Nil,_) => throw new IllegalArgumentException
-         case (_, 0) => etape
-         case (_, nombreIteration) => ant(machin(etape),nombreIteration - 1) 
-       }
-       Nil
+     (etape, nombreIteration) match {
+       case (Nil,_) => throw new IllegalArgumentException
+       case (_, 0) => etape
+       case _ => ant(iterate(etape.tail, 0, etape.head), nombreIteration - 1) 
+     }
     }
+    */
+    def ant(etape: List[Int], nombreIteration: Int): List[Int] = {
+      def iterate(etape: List[Int], number: Int, count: Int): List[Int] = {
+        etape match {
+          case Nil => List(count,number)
+          case elem::second::reste if elem != second => count::elem::iterate(reste,second,1)
+          case _ => iterate(etape.tail,etape.head,count + 1)
+        }
+      }
+      
+      (etape, nombreIteration) match {
+       case (Nil,_) => throw new IllegalArgumentException
+       case (_, 0) => etape
+       case _ => ant(iterate(etape, etape.head, 1), nombreIteration - 1) 
+     }
+    }
+    
 
     /**
      * Exercise 4
